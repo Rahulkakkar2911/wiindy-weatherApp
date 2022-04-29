@@ -12,10 +12,9 @@ const humidityText = document.querySelector('.humidity span');
 const imgEl = document.querySelector('.weather-icon');
 const backArrow = document.querySelector('.header i');
 let api = '';
-let api_key = process.env.apikey;
 
 const requestAPI = function(city){
-    api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${api_key}`;
+    api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apikey}`;
     fetchData()
     
 }
@@ -70,7 +69,7 @@ const weatherDetails = function(data){
 }
 const onSuccess = function(position){
     const {latitude, longitude} = position.coords;
-    api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${api_key}`;
+    api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apikey}`;
     fetchData();
 }
 const onError = function(err){
