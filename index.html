@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wiindy | Weather APP</title>
+    <script src="./config.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,14 +23,14 @@
       </div>
       <div class="input-container">
         <p class="alert">Please enter a valid city name</p>
-        <input type="text" name="" id="" placeholder="Enter city Name" spellcheck="false">
+        <input class="inputtxt" type="text" name="" id="" placeholder="Enter city Name" spellcheck="false">
         <div class="separator"></div>
-        <button>Get Device Location</button>
+        <button class="get-loc-btn">Get Device Location</button>
       </div>
       <div class="weather-part">
-          <img src="./icons/clear.png" alt="weather icon">
+          <img class="weather-icon" src="#" alt="weather icon">
           <div class="temp">
-              <span class="num">13</span>
+              <span class="num">__</span>
               <span class="deg">°</span>C
           </div>
           <div class="weather">Broken Clouds</div>
@@ -42,7 +43,7 @@
                   <i class="bx bxs-thermometer"></i>
                   <div class="details">
                     <div class="temp">
-                        <span class="num-2">13</span>
+                        <span class="num-2">__</span>
                         <span class="deg">°</span>C
                     </div>
                     <p>Feels like</p>
@@ -51,7 +52,7 @@
               <div class="column humidity">
                 <i class="bx bxs-droplet-half"></i>
                 <div class="details">
-                  <span>84%</span>
+                  <span>__%</span>
                   <p>Humidity</p>
                 </div>
             </div>
