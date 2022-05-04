@@ -14,7 +14,7 @@ const backArrow = document.querySelector('.header i');
 let api = '';
 
 const requestAPI = function(city){
-    api = `http://localhost:8000/weather/${city}`;
+    api = `https://morning-wave-33586.herokuapp.com/weather/${city}`;
     fetchData(api)
 }
 const fetchData = function(api){
@@ -67,7 +67,7 @@ const weatherDetails = function(data){
 }
 const onSuccess = function(position){
     const {latitude, longitude} = position.coords;
-    api = `http://localhost:8000/weather/geoloc/?lat=${latitude}&long=${longitude}`;
+    api = `https://morning-wave-33586.herokuapp.com/weather/geoloc/?lat=${latitude}&long=${longitude}`;
     fetchData(api);
 
 }
