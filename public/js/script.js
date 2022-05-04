@@ -28,6 +28,9 @@ const weatherDetails = function(data){
     if(data.status === 404){
         alertTxt.innerText = `${inputField.value} isn't a valid city name`;
         alertTxt.classList.replace('info', 'error');
+        setTimeout(() => {
+            alertTxt.classList.remove('info', 'error');
+        }, 3000);
     }
     else{
         //required Properties from data obj
@@ -73,7 +76,11 @@ const onSuccess = function(position){
 }
 const onError = function(err){
     alertTxt.innerText = err.message;
-    alertTxt.classList.add('error')
+    alertTxt.classList.add('error');
+    setTimeout(() => {
+        alertTxt.classList.remove('info', 'error');
+    }, 5000);
+    
 }
 inputField.addEventListener('keyup', e=> {
     let city = inputField.value.trim();
