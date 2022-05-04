@@ -14,18 +14,18 @@ const backArrow = document.querySelector('.header i');
 let api = '';
 
 const requestAPI = function(city){
-    api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apikey}`;
-    fetchData()
-    
+    api = `http://localhost:8000/weather/${city}`;
+    fetchData(api)
 }
-const fetchData = function(){
+const fetchData = function(api){
     alertTxt.innerText = "Getting Weather Details...";
     alertTxt.classList.add('info');
-    fetch(api).then(res => res.json().then(data => weatherDetails(data))
-    );
+    fetch(api).then(res => res.json().then(data => {
+        weatherDetails(data)
+    }));
 }
 const weatherDetails = function(data){
-    if(data.cod === '404'){
+    if(data.status === 404){
         alertTxt.innerText = `${inputField.value} isn't a valid city name`;
         alertTxt.classList.replace('info', 'error');
     }
@@ -37,31 +37,29 @@ const weatherDetails = function(data){
         const {feels_like, humidity, temp} = data.main;
 
         if(id === 800){
-            imgEl.src = `icons/clear.png`;
+            imgEl.src = `images/icons/clear.png`;
         }
         else if(id >= 200 && id <= 232){
-            imgEl.src = `icons/storm.png`
+            imgEl.src = `images/icons/storm.png`
         }
         else if(id >= 600 && id <= 622){
-            imgEl.src = `icons/snow.png`
+            imgEl.src = `images/icons/snow.png`
         }
         else if(id >= 701 && id <= 781){
-            imgEl.src = `icons/haze.png`
+            imgEl.src = `images/icons/haze.png`
         }
         else if(id >= 801 && id <= 804){
-            imgEl.src = `icons/cloud.png`
+            imgEl.src = `images/icons/cloud.png`
         }
         else if((id >= 300 && id <= 321) || (id >= 500 && id <= 531)){
-            imgEl.src = `icons/rain.png`
+            imgEl.src = `images/icons/rain.png`
         }
-
         //passing to html
         tempNum.innerText = Math.floor(temp);
         weatherTxt.innerText = description;
         locationTxt.innerText = `${city}, ${country}`;
         feelsLikeText.innerText = Math.floor(feels_like);
         humidityText.innerText = `${humidity}%`;
-
         alertTxt.classList.remove('info', 'error');
         container.classList.add('active');
     }
@@ -69,8 +67,9 @@ const weatherDetails = function(data){
 }
 const onSuccess = function(position){
     const {latitude, longitude} = position.coords;
-    api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apikey}`;
-    fetchData();
+    api = `http://localhost:8000/weather/geoloc/?lat=${latitude}&long=${longitude}`;
+    fetchData(api);
+
 }
 const onError = function(err){
     alertTxt.innerText = err.message;
@@ -94,4 +93,5 @@ getLocBtn.addEventListener('click', (e) => {
 })
 backArrow.addEventListener('click', e => {
     container.classList.remove('active');
+    inputField.value = "";
 })
