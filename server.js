@@ -7,12 +7,16 @@ const app = express();
 dotenv.config({
     path:"./config.env"
 });
+app.use(express.static('public'));
+app.use(express.json());
+app.use(cors());
+
 if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
 }
-app.use(cors());
-app.use(express.json());
-
+app.get('/', (req,res) => {
+    res.send(`index.html`);
+})
 app.get('/weather/geoloc', async (req,res,next) => {
     try{
         api = `https://api.openweathermap.org/data/2.5/weather?lat=${req.query.lat}&lon=${req.query.long}&units=metric&appid=${process.env.API_KEY}`;
