@@ -1,4 +1,5 @@
 //Elements -> 
+let timer;
 const container = document.querySelector('.container');
 let inputPart = document.querySelector('.input-part');
 let alertTxt = document.querySelector('.alert');
@@ -12,7 +13,6 @@ const humidityText = document.querySelector('.humidity span');
 const imgEl = document.querySelector('.weather-icon');
 const backArrow = document.querySelector('.header i');
 let api = '';
-
 const requestAPI = function(city){
     api = `https://morning-wave-33586.herokuapp.com/weather/${city}`;
     fetchData(api)
@@ -28,7 +28,8 @@ const weatherDetails = function(data){
     if(data.status === 404){
         alertTxt.innerText = `${inputField.value} isn't a valid city name`;
         alertTxt.classList.replace('info', 'error');
-        setTimeout(() => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
             alertTxt.classList.remove('info', 'error');
         }, 3000);
     }
@@ -74,10 +75,12 @@ const onSuccess = function(position){
     fetchData(api);
 
 }
+
 const onError = function(err){
     alertTxt.innerText = err.message;
     alertTxt.classList.add('error');
-    setTimeout(() => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
         alertTxt.classList.remove('info', 'error');
     }, 5000);
     
