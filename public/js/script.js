@@ -22,7 +22,7 @@ const debounce = function(func, timer){
     },timer)
 }
 const requestAPI = function(city){
-    api = `https://morning-wave-33586.herokuapp.com/${city}`;
+    api = `https://morning-wave-33586.herokuapp.com/weather/${city}`;
     fetchData(api)
 }
 const fetchData = function(api){
