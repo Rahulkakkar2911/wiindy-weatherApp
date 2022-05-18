@@ -1,5 +1,4 @@
 //Elements -> 
-let timer;
 const container = document.querySelector('.container');
 let inputPart = document.querySelector('.input-part');
 let alertTxt = document.querySelector('.alert');
@@ -13,8 +12,17 @@ const humidityText = document.querySelector('.humidity span');
 const imgEl = document.querySelector('.weather-icon');
 const backArrow = document.querySelector('.header i');
 let api = '';
+let timerId = null;
+const debounce = function(func, timer){
+    if(timerId){
+        clearTimeout(timerId);
+    }
+    timerId = setTimeout(()=>{
+        func();
+    },timer)
+}
 const requestAPI = function(city){
-    api = `https://morning-wave-33586.herokuapp.com/weather/${city}`;
+    api = `https://morning-wave-33586.herokuapp.com/${city}`;
     fetchData(api)
 }
 const fetchData = function(api){
@@ -28,10 +36,9 @@ const weatherDetails = function(data){
     if(data.status === 404){
         alertTxt.innerText = `${inputField.value} isn't a valid city name`;
         alertTxt.classList.replace('info', 'error');
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        debounce(function(){
             alertTxt.classList.remove('info', 'error');
-        }, 3000);
+        },3000);
     }
     else{
         //required Properties from data obj
@@ -73,16 +80,14 @@ const onSuccess = function(position){
     const {latitude, longitude} = position.coords;
     api = `https://morning-wave-33586.herokuapp.com/weather/geoloc/?lat=${latitude}&long=${longitude}`;
     fetchData(api);
-
 }
 
 const onError = function(err){
     alertTxt.innerText = err.message;
     alertTxt.classList.add('error');
-    clearTimeout(timer);
-    timer = setTimeout(() => {
+    debounce(function(){
         alertTxt.classList.remove('info', 'error');
-    }, 5000);
+    },3000);
     
 }
 inputField.addEventListener('keyup', e=> {
