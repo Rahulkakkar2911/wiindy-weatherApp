@@ -57,7 +57,7 @@ app.use((err, req, res, next) => {
     }
 });
 
-app.listen(process.env.PORT || 3000, (err) => {
+const server = app.listen(process.env.PORT || 3000, (err) => {
     if(!err){
         console.log(`Server is running on port : ${process.env.PORT || 3000}`);
     }
@@ -65,3 +65,10 @@ app.listen(process.env.PORT || 3000, (err) => {
         console.log(`Error Occured : `,err);
     }
 })
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received');
+    server.close(() => {
+         console.log('Process terminated');
+    });
+});
